@@ -55,50 +55,43 @@ Unless added later, the MVP does not include:
 
 ## 4. Functional Requirements
 
-Functional requirements describe what the application must do.
+| ID    | Requirement                                                                         | Priority |
+| :---- | :---------------------------------------------------------------------------------- | :------: |
+| FR-01 | Users can register an account with the required details.                            |   Must   |
+| FR-02 | The system validates registration details and rejects invalid or duplicate entries. |   Must   |
+| FR-03 | Passwords are stored as secure hashes, not plaintext.                               |   Must   |
+| FR-04 | Registered users can log in with valid credentials.                                 |   Must   |
+| FR-05 | Invalid login attempts are rejected without exposing sensitive information.         |   Must   |
+| FR-06 | Users can log out and end their active client-side session.                         |   Must   |
+| FR-07 | Authenticated users can create text-based posts.                                    |   Must   |
+| FR-08 | Users can view posts in a shared feed.                                              |   Must   |
+| FR-09 | Each post displays its author's identity, content, and creation date.               |   Must   |
+| FR-10 | Posts appear in newest-first order.                                                 |   Must   |
+| FR-11 | User and post data persist in the database after application restarts.              |   Must   |
+| FR-12 | Protected backend operations reject unauthenticated requests.                       |   Must   |
+| FR-13 | Every post is associated with its author.                                           |   Must   |
+| FR-14 | Users can like and unlike posts.                                                    |  Should  |
+| FR-15 | Users can view and add comments to posts.                                           |  Should  |
+| FR-16 | Only post owners can edit or delete their posts.                                    |  Should  |
+| FR-17 | Comment deletion is restricted according to comment ownership rules.                |  Should  |
+| FR-18 | The application provides clear success and error feedback.                          |  Should  |
 
-| ID    | Requirement                                                                                                                  | Priority |
-| ----- | ---------------------------------------------------------------------------------------------------------------------------- | -------- |
-| FR-01 | The system shall allow a new user to register an account with the required registration details.                             | Must     |
-| FR-02 | The system shall validate registration input and reject invalid or duplicate account details.                                | Must     |
-| FR-03 | The system shall store passwords as secure hashes rather than plaintext.                                                     | Must     |
-| FR-04 | The system shall allow registered users to log in with valid credentials.                                                    | Must     |
-| FR-05 | The system shall reject login attempts with invalid credentials without revealing sensitive account information.             | Must     |
-| FR-06 | The system shall allow an authenticated user to log out by ending or removing the active client-side authentication session. | Must     |
-| FR-07 | The system shall allow an authenticated user to create a text-based post.                                                    | Must     |
-| FR-08 | The system shall allow users to view posts in a shared feed.                                                                 | Must     |
-| FR-09 | Each post shall display its author's identity, text content, and creation date or timestamp.                                 | Must     |
-| FR-10 | The feed shall display the newest posts first.                                                                               | Must     |
-| FR-11 | The system shall persist user and post data in a database so that it remains available after an application restart.         | Must     |
-| FR-12 | The backend shall protect operations that require authentication and reject unauthenticated requests.                        | Must     |
-| FR-13 | The system shall associate each post with its author.                                                                        | Must     |
-| FR-14 | The system shall allow a user to like and unlike a post, subject to the application's defined rules.                         | Should   |
-| FR-15 | The system shall allow users to view and add comments to posts.                                                              | Should   |
-| FR-16 | The system shall restrict post editing and deletion to the post's owner.                                                     | Should   |
-| FR-17 | The system shall restrict comment deletion to the comment's owner, subject to the implemented authorisation rules.           | Should   |
-| FR-18 | The system shall provide meaningful feedback when an operation succeeds or fails.                                            | Should   |
-
-**Priority definitions**
-
-* **Must:** Essential to the assessed MVP.
-* **Should:** Valuable additional functionality that should be completed if time permits.
+**Priority:** Must = essential for the MVP; Should = additional functionality.
 
 ## 5. Non-Functional Requirements
 
-Non-functional requirements describe how well the system should operate.
-
-| ID     | Requirement                                                                                                               | Verification                                                                         |
-| ------ | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| NFR-01 | Security: Passwords shall not be stored in plaintext.                                                                     | Inspect the authentication implementation and stored password values.                |
-| NFR-02 | Security: Protected API operations shall verify authentication on the server.                                             | Send requests with missing, invalid, and valid authentication credentials.           |
-| NFR-03 | Security: Users shall not be able to edit or delete another user's content where ownership restrictions apply.            | Attempt to modify content owned by another user.                                     |
-| NFR-04 | Data persistence: Users and posts shall remain stored after the application is restarted.                                 | Create records, restart the application, and retrieve the records.                   |
-| NFR-05 | Reliability: Invalid input and expected application errors shall be handled without an unhandled server failure.          | Test invalid requests and confirm appropriate error responses.                       |
-| NFR-06 | Maintainability: Frontend, backend, and database responsibilities shall be organised into identifiable components.        | Inspect the project structure and architecture documentation.                        |
-| NFR-07 | Usability: The interface shall provide understandable navigation, forms, and feedback messages.                           | Complete registration, login, posting, and feed-viewing tasks through the interface. |
-| NFR-08 | Compatibility: The application shall be runnable in the documented development environment.                               | Follow the README setup instructions on a compatible machine.                        |
-| NFR-09 | Testability: Core application behaviour shall be covered by automated tests.                                              | Run the project's automated test suite and review the results.                       |
-| NFR-10 | Delivery: The CI workflow shall install dependencies, run tests, and build the application as required by the assessment. | Inspect a successful CI run triggered by a push to GitHub.                           |
+| ID     | Category        | Requirement                                                         | Verification                                 |
+| :----- | :-------------- | :------------------------------------------------------------------ | :------------------------------------------- |
+| NFR-01 | Security        | Passwords must be stored as hashes.                                 | Inspect stored password values.              |
+| NFR-02 | Security        | Protected API endpoints must validate authentication.               | Test requests with and without valid tokens. |
+| NFR-03 | Authorisation   | Users cannot modify another user's posts.                           | Test ownership restrictions.                 |
+| NFR-04 | Persistence     | User and post data must survive application restarts.               | Restart the app and retrieve saved data.     |
+| NFR-05 | Reliability     | Invalid requests must produce appropriate errors.                   | Submit invalid API requests.                 |
+| NFR-06 | Maintainability | Frontend, backend, and database responsibilities must be separated. | Review the project structure.                |
+| NFR-07 | Usability       | Forms and actions must provide understandable feedback.             | Test common user workflows.                  |
+| NFR-08 | Compatibility   | Setup instructions must allow another developer to run the app.     | Follow the README on a compatible machine.   |
+| NFR-09 | Testability     | Core behaviour must have automated tests.                           | Run the test suite.                          |
+| NFR-10 | Delivery        | CI must run tests and build the application.                        | Review a successful CI workflow.             |
 
 ## 6. Assumptions and Constraints
 
@@ -122,29 +115,29 @@ Non-functional requirements describe how well the system should operate.
 
 ## 7. Acceptance Criteria
 
-Acceptance criteria define observable conditions used to determine whether requirements have been satisfied.
+The following criteria define how the main requirements will be tested.
 
-| ID    | Related requirements  | Acceptance criteria                                                                                                      |
-| ----- | --------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| AC-01 | FR-01, FR-02          | A user can register using valid details. Invalid or duplicate details are rejected with a clear error.                   |
-| AC-02 | FR-03, NFR-01         | A registered user's password is stored as a hash, not as the original plaintext password.                                |
-| AC-03 | FR-04, FR-05          | Valid credentials allow login; invalid credentials are rejected.                                                         |
-| AC-04 | FR-06                 | After logout, the client no longer uses the previous authentication token for protected requests.                        |
-| AC-05 | FR-07                 | An authenticated user can submit a valid post and see it appear in the feed.                                             |
-| AC-06 | FR-08, FR-09          | The feed displays post content, author identity, and creation date or timestamp.                                         |
-| AC-07 | FR-10                 | When posts have different creation times, the newest post appears before older posts.                                    |
-| AC-08 | FR-11, NFR-04         | A created user and post can still be retrieved after restarting the application, provided the database data is retained. |
-| AC-09 | FR-12, NFR-02         | Requests to protected endpoints without valid authentication are rejected by the backend.                                |
-| AC-10 | FR-14                 | A user can like a post and remove their like according to the application's rules.                                       |
-| AC-11 | FR-15                 | A user can add a comment to a post and retrieve the post's comments.                                                     |
-| AC-12 | FR-16, NFR-03         | The post owner can edit or delete their own post; another user cannot do so.                                             |
-| AC-13 | FR-17                 | A comment owner can delete their own comment; an unauthorised user cannot delete it.                                     |
-| AC-14 | FR-18, NFR-05, NFR-07 | Successful actions and common errors produce understandable feedback in the interface or API response.                   |
-| AC-15 | NFR-06                | The project contains identifiable frontend, backend, and database components with documented responsibilities.           |
-| AC-16 | NFR-08                | A new developer can follow the README to configure and run the application.                                              |
-| AC-17 | NFR-09                | The automated test suite completes and reports its results.                                                              |
-| AC-18 | NFR-10                | A GitHub Actions workflow runs the required checks and build successfully after a push.                                  |
-| AC-19 | Delivery constraints  | The documented Docker workflow builds and starts the application and its required services.                              |
+| ID    | Related Requirement | Acceptance Criteria                                                     |
+| :---- | :------------------ | :---------------------------------------------------------------------- |
+| AC-01 | FR-01, FR-02        | Valid registration succeeds; invalid or duplicate details are rejected. |
+| AC-02 | FR-03               | Passwords are stored as hashes, not plaintext.                          |
+| AC-03 | FR-04, FR-05        | Valid credentials allow login; invalid credentials are rejected.        |
+| AC-04 | FR-06               | Logging out removes the active token from the client.                   |
+| AC-05 | FR-07               | An authenticated user can create a post and see it in the feed.         |
+| AC-06 | FR-08, FR-09        | Posts show their content, author, and creation date.                    |
+| AC-07 | FR-10               | Newer posts appear before older posts.                                  |
+| AC-08 | FR-11               | Saved users and posts remain available after an application restart.    |
+| AC-09 | FR-12               | Protected endpoints reject requests without valid authentication.       |
+| AC-10 | FR-14               | Users can like a post and remove their like.                            |
+| AC-11 | FR-15               | Users can add comments and retrieve a post's comments.                  |
+| AC-12 | FR-16               | Owners can edit or delete their posts; other users cannot.              |
+| AC-13 | FR-17               | Comment owners can delete their comments; unauthorised users cannot.    |
+| AC-14 | FR-18               | Successful actions and common errors produce understandable feedback.   |
+| AC-15 | NFR-06              | Frontend, backend, and database responsibilities are identifiable.      |
+| AC-16 | NFR-08              | A developer can run the application by following the README.            |
+| AC-17 | NFR-09              | Automated tests run and report their results.                           |
+| AC-18 | NFR-10              | CI runs the required checks and build successfully after a push.        |
+| AC-19 | Delivery            | The documented Docker workflow builds and starts the required services. |
 
 ## 8. Requirements Verification Approach
 
