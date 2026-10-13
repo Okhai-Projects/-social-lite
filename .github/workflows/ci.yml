@@ -55,10 +55,13 @@ jobs:
           pip install -r requirements.txt
           pip install pytest httpx uvicorn
 
+      - name: Initialize database tables
+        working-directory: backend
+        run: python init_db.py
+
       - name: Run backend tests
         working-directory: backend
         run: python -m pytest -q
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
