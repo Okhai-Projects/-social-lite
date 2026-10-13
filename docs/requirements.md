@@ -32,7 +32,7 @@ The MVP is intended to include:
 * Automated tests and a continuous integration workflow.
 * Docker-based local execution.
 
-Additional implemented features include liking posts, commenting on posts, editing one's own posts, and deleting one's own posts or comments. These features should be tested and documented in line with the final implementation.
+Additional features implemented in the application include liking posts, commenting on posts, editing posts, and deleting posts or comments. These features must be tested against the final implementation.
 
 ### 2.2 Out of Scope
 
@@ -56,32 +56,32 @@ Unless added later, the MVP does not include:
 ## 4. Functional Requirements
 
 | ID    | Requirement                                                                         | Priority |
-| :---- | :---------------------------------------------------------------------------------- | :------: |
-| FR-01 | Users can register an account with the required details.                            |   Must   |
-| FR-02 | The system validates registration details and rejects invalid or duplicate entries. |   Must   |
-| FR-03 | Passwords are stored as secure hashes, not plaintext.                               |   Must   |
-| FR-04 | Registered users can log in with valid credentials.                                 |   Must   |
-| FR-05 | Invalid login attempts are rejected without exposing sensitive information.         |   Must   |
-| FR-06 | Users can log out and end their active client-side session.                         |   Must   |
-| FR-07 | Authenticated users can create text-based posts.                                    |   Must   |
-| FR-08 | Users can view posts in a shared feed.                                              |   Must   |
-| FR-09 | Each post displays its author's identity, content, and creation date.               |   Must   |
-| FR-10 | Posts appear in newest-first order.                                                 |   Must   |
-| FR-11 | User and post data persist in the database after application restarts.              |   Must   |
-| FR-12 | Protected backend operations reject unauthenticated requests.                       |   Must   |
-| FR-13 | Every post is associated with its author.                                           |   Must   |
-| FR-14 | Users can like and unlike posts.                                                    |  Should  |
-| FR-15 | Users can view and add comments to posts.                                           |  Should  |
-| FR-16 | Only post owners can edit or delete their posts.                                    |  Should  |
-| FR-17 | Comment deletion is restricted according to comment ownership rules.                |  Should  |
-| FR-18 | The application provides clear success and error feedback.                          |  Should  |
+| ----- | ----------------------------------------------------------------------------------- | -------- |
+| FR-01 | Users can register an account with the required details.                            | Must     |
+| FR-02 | The system validates registration details and rejects invalid or duplicate entries. | Must     |
+| FR-03 | Passwords are stored as secure hashes, not plaintext.                               | Must     |
+| FR-04 | Registered users can log in with valid credentials.                                 | Must     |
+| FR-05 | Invalid login attempts are rejected without exposing sensitive information.         | Must     |
+| FR-06 | Users can log out and end their active client-side session.                         | Must     |
+| FR-07 | Authenticated users can create text-based posts.                                    | Must     |
+| FR-08 | Users can view posts in a shared feed.                                              | Must     |
+| FR-09 | Each post displays its author's identity, content, and creation date.               | Must     |
+| FR-10 | Posts appear in newest-first order.                                                 | Must     |
+| FR-11 | User and post data persist in the database after application restarts.              | Must     |
+| FR-12 | Protected backend operations reject unauthenticated requests.                       | Must     |
+| FR-13 | Every post is associated with its author.                                           | Must     |
+| FR-14 | Users can like and unlike posts.                                                    | Should   |
+| FR-15 | Users can view and add comments to posts.                                           | Should   |
+| FR-16 | Only post owners can edit or delete their posts.                                    | Should   |
+| FR-17 | Comment deletion follows the application's comment ownership rules.                 | Should   |
+| FR-18 | The application provides clear success and error feedback.                          | Should   |
 
-**Priority:** Must = essential for the MVP; Should = additional functionality.
+**Priority levels:** Must = essential for the MVP; Should = additional functionality.
 
 ## 5. Non-Functional Requirements
 
 | ID     | Category        | Requirement                                                         | Verification                                 |
-| :----- | :-------------- | :------------------------------------------------------------------ | :------------------------------------------- |
+| ------ | --------------- | ------------------------------------------------------------------- | -------------------------------------------- |
 | NFR-01 | Security        | Passwords must be stored as hashes.                                 | Inspect stored password values.              |
 | NFR-02 | Security        | Protected API endpoints must validate authentication.               | Test requests with and without valid tokens. |
 | NFR-03 | Authorisation   | Users cannot modify another user's posts.                           | Test ownership restrictions.                 |
@@ -98,27 +98,27 @@ Unless added later, the MVP does not include:
 ### 6.1 Assumptions
 
 * Users have access to a modern web browser.
-* Users have an internet or local network connection to access the running application.
+* Users have a network connection to access the running application.
 * Each user is expected to use their own account credentials.
-* The application is intended as an educational MVP rather than a production-scale social network.
+* The application is an educational MVP rather than a production-scale social network.
 * PostgreSQL is the persistent database used by the application.
 * The React frontend communicates with the FastAPI backend through HTTP API requests.
 
 ### 6.2 Constraints
 
-* The project must satisfy the supplied assessment brief and marking rubric.
+* The project must satisfy the assessment brief and marking rubric.
 * The project must be maintained in a GitHub repository.
 * Docker must support the documented local execution workflow.
-* The CI workflow must perform the required dependency installation, testing, and build steps.
+* The CI workflow must install dependencies, run tests, and build the application as required.
 * Development time and the scope of an MVP limit the number of features that can be included.
-* Secrets such as database passwords and signing keys must not be committed to the public repository.
+* Database passwords and signing keys must not be committed to the public repository.
 
 ## 7. Acceptance Criteria
 
 The following criteria define how the main requirements will be tested.
 
 | ID    | Related Requirement | Acceptance Criteria                                                     |
-| :---- | :------------------ | :---------------------------------------------------------------------- |
+| ----- | ------------------- | ----------------------------------------------------------------------- |
 | AC-01 | FR-01, FR-02        | Valid registration succeeds; invalid or duplicate details are rejected. |
 | AC-02 | FR-03               | Passwords are stored as hashes, not plaintext.                          |
 | AC-03 | FR-04, FR-05        | Valid credentials allow login; invalid credentials are rejected.        |
@@ -131,7 +131,7 @@ The following criteria define how the main requirements will be tested.
 | AC-10 | FR-14               | Users can like a post and remove their like.                            |
 | AC-11 | FR-15               | Users can add comments and retrieve a post's comments.                  |
 | AC-12 | FR-16               | Owners can edit or delete their posts; other users cannot.              |
-| AC-13 | FR-17               | Comment owners can delete their comments; unauthorised users cannot.    |
+| AC-13 | FR-17               | Comment deletion follows the application's ownership rules.             |
 | AC-14 | FR-18               | Successful actions and common errors produce understandable feedback.   |
 | AC-15 | NFR-06              | Frontend, backend, and database responsibilities are identifiable.      |
 | AC-16 | NFR-08              | A developer can run the application by following the README.            |
@@ -156,10 +156,10 @@ A requirement shall only be marked as fully satisfied when the corresponding beh
 
 * Password hashing and token validation must be reviewed to confirm that authentication is secure.
 * Database persistence must be verified by restarting the application and checking retained data.
-* The implementation of logout must be checked to ensure the client removes its active token.
+* Logout must be checked to ensure the client removes its active token.
 * Docker and CI workflows must be executed successfully before they are described as complete.
-* Additional features such as comments, likes, editing, and deletion must be tested against their ownership rules.
-* The final requirements should be updated if implementation decisions change during development.
+* Comments, likes, editing, and deletion must be tested against their ownership rules.
+* The requirements must be updated if implementation decisions change during development.
 
 ## 10. Conclusion
 
