@@ -2,6 +2,8 @@ from fastapi.middleware.cors import CORSMiddleware
 import os
 from pathlib import Path
 from datetime import datetime, timedelta, timezone
+from dotenv import load_dotenv
+load_dotenv()
 
 import jwt
 import psycopg
@@ -35,6 +37,8 @@ allow_origins=[
 "http://127.0.0.1:5173",
 "http://127.0.0.1:5174",
 "http://127.0.0.1:5175",
+"http://localhost:8080",
+"http://127.0.0.1:8080",
 ],
 allow_credentials=True,
 allow_methods=["*"],

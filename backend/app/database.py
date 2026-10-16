@@ -5,7 +5,7 @@ import psycopg
 from dotenv import load_dotenv
 
 ENV_FILE = Path(__file__).resolve().parent.parent / ".env"
-load_dotenv(ENV_FILE)
+load_dotenv(ENV_FILE, override=False)
 
 def get_connection():
     """Open and return a connection to the SocialLite database."""

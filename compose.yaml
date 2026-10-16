@@ -1,16 +1,51 @@
+
 services:
   db:
-    image: postgres:16
-    container_name: social-lite-db
+    image: postgres:16-bookworm
     restart: unless-stopped
     environment:
       POSTGRES_DB: sociallite
       POSTGRES_USER: sociallite
       POSTGRES_PASSWORD: sociallite_dev_password
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sociallite -d sociallite"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+    restart: unless-stopped
+    environment:
+      DB_HOST: db
+      DB_PORT: "5432"
+      DB_NAME: sociallite
+      DB_USER: sociallite
+      DB_PASSWORD: sociallite_dev_password
+      JWT_SECRET: sociallite_dev_secret_key_2026_change_before_production_8f4a2c9d
+      JWT_ALGORITHM: HS256
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    command: >
+      sh -c "python init_db.py &&
+      uvicorn app.main:app --host 0.0.0.0 --port 8000"
+
+  frontend:
+    build:
+      context: ./frontend
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
 
 volumes:
   postgres_data:
